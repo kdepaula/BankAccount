@@ -1,27 +1,26 @@
 
-public class BankAccount 
+public abstract class BankAccount 
 {
 		private double balance;
 		private int accNum;
 		private String name;
+		private static int nextAccNum = 100;
 		
 
-		public BankAccount(String holder, int num)
+		public BankAccount(String name, double balance)
 		{
-			name = holder;
-			accNum = num;
-			balance = 0;
+			this.name = name;
+			this.balance = balance;
+			accNum = nextAccNum;
+			nextAccNum++;
 			
-			//you cannot name arguments the same name as the field
 		}
 		
-		public BankAccount(String holder, int num, double startBal)
-		
+		public BankAccount(String name)
 		{
-			name = holder;
-			accNum = num;
-			balance = startBal;
+			this(name, 0);
 		}
+	
 		
 		public void deposit(double amt)
 		{
@@ -38,10 +37,31 @@ public class BankAccount
 			return balance;
 		}
 		
+		public int getAccNum()
+		{
+			return accNum;
+		}
+		
+		public String getName()
+		{
+			return name;
+		}
+		
+		public abstract void endOfMonthUpdate();
+		
+		public void transfer(BankAccount other, double amt)
+		{
+			if(amt < 0 || this.getBalance() - amt < 0 || !other.getName().equals(this.getName()))
+			{
+				throw new IllegalArgumentException();
+			}
+			withdraw(amt);
+			other.deposit(amt);
+		}
+		
 		public String toString()
 		{
-			return "Account Holder: " + name + "\tAccount Number: " + accNum + "\tBalance: " + balance;
+			return "Account Number: " + accNum + "\tAccount Holder: " + name + "\tBalance: " + balance;
 			
 		}
-//the  toString() method returns the value of all the fields
 }
