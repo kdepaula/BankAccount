@@ -9,7 +9,6 @@ public class BankAccountMain
 	private static final double MIN_BAL = 300;
 	private static final double MIN_BAL_FEE = 10;
 	private static final double FREE_TRANSACTIONS = 10;
-	private static int arrNum = 1;
 
 	public static void main(String[] args) 
 	{
@@ -18,9 +17,8 @@ public class BankAccountMain
 		boolean playAgain = true;
 		while(playAgain)
 		{
+			String bal;
 			String name;
-			System.out.println("What is your name?");
-			name = in.next();
 			in.nextLine();
 			System.out.println("Would you like to add an account, make a transaction, or terminate the program?");
 			String answer = in.next().toLowerCase();
@@ -29,6 +27,8 @@ public class BankAccountMain
 			{
 				case "account":
 				{
+					System.out.println("What is your name?");
+					name = in.next();
 					System.out.println("Would you like to create a checking or savings account?");
 					answer= in.next().toLowerCase();
 					in.nextLine();
@@ -36,8 +36,9 @@ public class BankAccountMain
 					{
 						case "checking":
 						{
+							
 							System.out.println("How much money would you like to put into the account initially?");
-							double bal = in.nextDouble();
+							bal = in.nextDouble();
 							in.nextLine();
 							while(bal < 0)
 							{
@@ -50,7 +51,16 @@ public class BankAccountMain
 						
 						case "savings":
 						{
-							accounts.add(new SavingsAccount(name, )))
+							System.out.println("How much money would you like to put into the account initially?");
+							bal = in.next();
+							in.nextLine();
+							while(!isNumeric(bal))
+							{
+								System.out.println("Please type a number.");
+								bal = in.nextDouble();
+								in.nextLine();
+							}
+							accounts.add(new SavingsAccount(name, bal, RATE, MIN_BAL, MIN_BAL_FEE));
 						}
 					
 						default:
@@ -59,11 +69,15 @@ public class BankAccountMain
 						while(play)
 						{
 							System.out.println("Please type checking or savings");	
+							answer = in.next();
+							in.nextLine();
+							if(answer.equals("checking") || answer.equals("savings"))
+							{	
+								play = false;
+							}
 						}
 						break;
 						}
-						
-						break;
 					}
 				}
 				case "transaction":
@@ -100,8 +114,23 @@ public class BankAccountMain
 				default:
 				{
 					System.out.println("Please type account or transaction or terminate");
+					break;
 				}
 			}
+		}
+	}
+
+	private static boolean isNumeric(String str) 
+	{
+		try
+		{
+			Double.parseDouble(str);
+			return true;
+		}
+		
+		catch(IllegalArgumentException e)
+		{
+			return false;
 		}
 	}
 

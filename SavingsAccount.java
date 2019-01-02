@@ -6,7 +6,7 @@ public class SavingsAccount extends BankAccount
 	private final double MIN_BAL_FEE;
 	
 	
-	public SavingsAccount(String name, int balance, double intRate, double mb, double mbf) 
+	public SavingsAccount(String name, double balance, double intRate, double mb, double mbf) 
 	{
 		super(name, balance);
 		this.intRate = intRate;
