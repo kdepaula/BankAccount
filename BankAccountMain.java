@@ -19,6 +19,7 @@ public class BankAccountMain
 		{
 			String bal;
 			String name;
+			BankAccount currentAccount;
 			System.out.println("Would you like to add an account, make a transaction, or terminate the program?");
 			String answer = in.next().toLowerCase();
 			in.nextLine();
@@ -83,7 +84,7 @@ public class BankAccountMain
 				}
 				case "transaction":
 				{
-					BankAccount currentAccount = null;
+					currentAccount = null;
 					System.out.println("What is your account number?");
 					int num = in.nextInt();
 					in.nextLine();
@@ -103,6 +104,49 @@ public class BankAccountMain
 							System.out.println("Please enter the account number again. That was not a valid number");
 							num = in.nextInt();
 							in.nextLine();
+						}
+					}
+					
+					System.out.println("Would you like to deposit, wiwthdraw, transfer, or get account numbers?");
+					answer = in.next();
+					in.nextLine();
+					String amt;
+					switch(answer)
+					{
+						case "deposit":
+						{
+							System.out.println("How much would you like to deposit?");
+							amt = in.nextLine();
+							if(!isNumeric(amt))
+							{
+								System.out.println("Please type a number.");
+								amt = in.nextLine();
+							}
+							currentAccount.deposit(Double.parseDouble(amt));
+							break;
+						}
+					
+						case "withdraw":
+						{
+							System.out.println("How much would you like to withdraw?");
+							amt = in.nextLine();
+							if(!isNumeric(amt))
+							{
+								System.out.println("Please type a number.");
+								amt = in.nextLine();
+							}
+							currentAccount.withdraw(Double.parseDouble(amt));
+							break;	
+						}
+						
+						case "transfer":
+						{
+							
+						}
+						
+						default:
+						{
+							System.out.println("Please type deposit, withdraw, ");
 						}
 					}
 					break;
