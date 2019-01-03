@@ -19,7 +19,6 @@ public class BankAccountMain
 		{
 			String bal;
 			String name;
-			in.nextLine();
 			System.out.println("Would you like to add an account, make a transaction, or terminate the program?");
 			String answer = in.next().toLowerCase();
 			in.nextLine();
@@ -38,15 +37,15 @@ public class BankAccountMain
 						{
 							
 							System.out.println("How much money would you like to put into the account initially?");
-							bal = in.nextDouble();
-							in.nextLine();
-							while(bal < 0)
+							bal = in.nextLine();
+							while(!isNumeric(bal))
 							{
-								System.out.println("Please type an amount greater than or equal to zero.");
-								bal = in.nextDouble();
+								System.out.println("Please type a number.");
+								bal = in.next();
 								in.nextLine();
 							}
 							accounts.add(new CheckingAccount(name, OVER_DRAFT_FEE, TRANSACTION_FEE, FREE_TRANSACTIONS));
+							break;
 						}
 						
 						case "savings":
@@ -57,28 +56,30 @@ public class BankAccountMain
 							while(!isNumeric(bal))
 							{
 								System.out.println("Please type a number.");
-								bal = in.nextDouble();
+								bal = in.next();
 								in.nextLine();
 							}
-							accounts.add(new SavingsAccount(name, bal, RATE, MIN_BAL, MIN_BAL_FEE));
+							accounts.add(new SavingsAccount(name, Double.parseDouble(bal), RATE, MIN_BAL, MIN_BAL_FEE));
+							break;
 						}
 					
 						default:
 						{
-						boolean play = true;
-						while(play)
-						{
-							System.out.println("Please type checking or savings");	
-							answer = in.next();
-							in.nextLine();
-							if(answer.equals("checking") || answer.equals("savings"))
-							{	
+							boolean play = true;
+							while(play)
+							{
+								System.out.println("Please type checking or savings");	
+								answer = in.next();
+								in.nextLine();
+								if(answer.equals("checking") || answer.equals("savings"))
+								{	
 								play = false;
+								}
 							}
-						}
-						break;
+							break;
 						}
 					}
+					break;
 				}
 				case "transaction":
 				{
@@ -100,6 +101,8 @@ public class BankAccountMain
 						if(currentAccount == null)
 						{
 							System.out.println("Please enter the account number again. That was not a valid number");
+							num = in.nextInt();
+							in.nextLine();
 						}
 					}
 					break;
@@ -133,5 +136,5 @@ public class BankAccountMain
 			return false;
 		}
 	}
-
+	
 }
