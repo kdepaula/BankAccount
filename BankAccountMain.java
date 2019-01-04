@@ -125,7 +125,7 @@ public class BankAccountMain
 							{
 								System.out.println("What is your account number?");
 								num = in.nextLine();
-								if(!isNumeric(num))
+								while(!isNumeric(num))
 								{
 									System.out.println("Please type a number.");
 									num = in.nextLine();
@@ -153,23 +153,49 @@ public class BankAccountMain
 												{
 													System.out.println("What is your name?");
 													name = in.nextLine();
-													int i;
-													for(i = 0; i < accounts.size(); i++)
+													for(int i = 0; i < accounts.size(); i++)
 													{
-														if(accounts.get(i).getName().equals(name))
+														while(currentAccount == null)
 														{
-															System.out.println(accounts.get(i).toString());
+															if(accounts.get(i).getName().equals(name))
+															{
+																System.out.println(accounts.get(i).toString());
+																System.out.println("Enter the account number of the account you would like to choose.");
+																num = in.nextLine();
+																for(int i = 0; i < accounts.size(); i++)
+																{
+																	if(accounts.get(i).getAccNum() == Integer.parseInt(num))
+																	{
+																		currentAccount = accounts.get(i);
+																		if(accounts.get(i) instanceof CheckingAccount)
+																		{
+																			System.out.print("Account Type: Checking Account ");
+																		}
+																		else 
+																		{
+																				System.out.print("Account Type: Savings Account");
+																		}
+																		System.out.println(accounts.get(i).toString());
+																	}
+																	
+																	else
+																	{
+																		System.out.print("That was not a valid number. ");
+																	}
+																}
+															}
+														
+														else
+														{
+															System.out.println("There are currently no accounts under that name. Please enter your name again to see all your accounts.");
 														}
 													}
-													while(!accounts.get(i).getName().equals(name))
-													{
-														System.out.println("There are currently no accounts under that name. Please enter your name again to see all your accounts.");
-													}
-												} while(!validResponse);
-												break;
-											}
+												}while(!validResponse);
+												}
 											
-											case "reenter":
+											}
+											 
+										case "reenter":
 											{
 												
 											}
@@ -199,7 +225,7 @@ public class BankAccountMain
 						{
 							System.out.println("What is your account number?");
 							num = in.nextLine();
-							if(!isNumeric(num))
+							while(!isNumeric(num))
 							{
 								System.out.println("Please type a number.");
 								num = in.nextLine();
