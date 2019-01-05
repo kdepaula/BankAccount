@@ -106,23 +106,23 @@ public class BankAccountMain
 					}
 					break;
 				}
+				
 				case "transaction":
 				{
 					BankAccount currentAccount = null;
 					String num;
 					String amt;
-					boolean validResponse = true;
-					int currentAccNum = 0;
+					boolean validName = false;
+					boolean play = true;
 					System.out.println("Would you like to deposit, withdraw, transfer, or get account numbers?");
+				while(play)
+				{
 					answer = in.next();
 					in.nextLine();
 					switch(answer)
 					{
 						case "deposit":
 						{
-							boolean again = true;
-							do
-							{
 								System.out.println("What is your account number?");
 								num = in.nextLine();
 								while(!isNumeric(num))
@@ -130,8 +130,6 @@ public class BankAccountMain
 									System.out.println("Please type a number.");
 									num = in.nextLine();
 								}
-								while(currentAccount == null)
-								{
 									for(int i = 0; i < accounts.size(); i++)
 									{
 										if(accounts.get(i).getAccNum() == Integer.parseInt(num))
@@ -141,86 +139,82 @@ public class BankAccountMain
 										}
 									}
 								
-									if(currentAccount == null)
+								while(currentAccount == null)
+								{
+									System.out.println("That was not a valid account number. Either enter your name to find your accounts, or reenter your account number.");
+									answer = in.nextLine();
+									if(!isNumeric(answer))
 									{
-										System.out.println("That was not a valid account number. Type \"reenter\" to reenter your account number or type \"name\" to use your name to find your accounts.");
-										answer = in.nextLine();
-										switch(answer)
+										do
 										{
-											case "name":
-											{	
-												do
+											for(int i = 0; i < accounts.size(); i++)
 												{
-													System.out.println("What is your name?");
-													name = in.nextLine();
-													for(int i = 0; i < accounts.size(); i++)
+													if(accounts.get(i).getName().equals(answer))
 													{
-														while(currentAccount == null)
-														{
-															if(accounts.get(i).getName().equals(name))
+															System.out.println(accounts.get(i).toString());
+															validName = true;
+															if(accounts.get(i) instanceof CheckingAccount)
 															{
-																System.out.println(accounts.get(i).toString());
-																System.out.println("Enter the account number of the account you would like to choose.");
-																num = in.nextLine();
-																for(int i = 0; i < accounts.size(); i++)
-																{
-																	if(accounts.get(i).getAccNum() == Integer.parseInt(num))
-																	{
-																		currentAccount = accounts.get(i);
-																		if(accounts.get(i) instanceof CheckingAccount)
-																		{
-																			System.out.print("Account Type: Checking Account ");
-																		}
-																		else 
-																		{
-																				System.out.print("Account Type: Savings Account");
-																		}
-																		System.out.println(accounts.get(i).toString());
-																	}
-																	
-																	else
-																	{
-																		System.out.print("That was not a valid number. ");
-																	}
-																}
+																System.out.print("Account Type: Checking Account ");
 															}
-														
-														else
-														{
-															System.out.println("There are currently no accounts under that name. Please enter your name again to see all your accounts.");
-														}
+															else 
+															{
+																System.out.print("Account Type: Savings Account");
+															}
 													}
-												}while(!validResponse);
 												}
-											
-											}
-											 
-										case "reenter":
-											{
 												
-											}
-											
-											default:
+												if(!validName)
+												{
+													System.out.println("There are currently no accounts under that name. Enter your name again to find your accounts.");
+													answer = in.nextLine();
+												}
+										}while(!validName);
+										
+										if(currentAccount == null)
+										{
+											System.out.println("Enter the account number of the account you would like to choose to deposit.");
+											num = in.nextLine();
+											while(!isNumeric(num))
 											{
-												System.out.println("Please type name or reenter");
-												answer = in.nextLine();
-												break;
+												System.out.println("Please type a number.");
+												num = in.nextLine();
 											}
+											for(int i = 0; i < accounts.size(); i++)
+											{
+												if(accounts.get(i).getAccNum() == Integer.parseInt(num))
+												{
+													currentAccount = accounts.get(i);
+												}
+											}
+										}
 									}
+										
+									else
+									{
+										for(int i = 0; i < accounts.size(); i++)
+										{
+											if(accounts.get(i).getAccNum() == Integer.parseInt(answer))
+											{
+												System.out.println(accounts.get(i).toString());
+												currentAccount = accounts.get(i);
+											}
+										}
 									}
 								}
-							} while(again);
-							System.out.println("How much would you like to deposit?");
-							amt = in.nextLine();
-							if(!isNumeric(amt))
-							{
-								System.out.println("Please type a number.");
+								
+						System.out.println("How much would you like to deposit?");
 								amt = in.nextLine();
-							}
-							currentAccount.deposit(Double.parseDouble(amt));
-							break;
+								if(!isNumeric(amt))
+								{
+									System.out.println("Please type a number.");
+									amt = in.nextLine();
+								}
+								currentAccount.deposit(Double.parseDouble(amt));
+								play = false;
+								break;
 						}
-					
+						
 						case "withdraw":
 						{
 							System.out.println("What is your account number?");
@@ -230,90 +224,167 @@ public class BankAccountMain
 								System.out.println("Please type a number.");
 								num = in.nextLine();
 							}
-							while(currentAccount == null)
-							{
 								for(int i = 0; i < accounts.size(); i++)
 								{
 									if(accounts.get(i).getAccNum() == Integer.parseInt(num))
 									{
 										System.out.println(accounts.get(i).toString());
 										currentAccount = accounts.get(i);
-										currentAccNum = accounts.get(i).getAccNum();
 									}
 								}
-								
-								if(currentAccount == null)
+							
+							while(currentAccount == null)
+							{
+								System.out.println("That was not a valid account number. Either enter your name to find your accounts, or reenter your account number.");
+								answer = in.nextLine();
+								if(!isNumeric(answer))
 								{
-									validResponse = true;
-									while(validResponse)
+									do
 									{
-										System.out.println("That was not a valid account number. Please enter your name to see your accounts.");
-										name = in.nextLine();
+										for(int i = 0; i < accounts.size(); i++)
+											{
+												if(accounts.get(i).getName().equals(answer))
+												{
+														System.out.println(accounts.get(i).toString());
+														validName = true;
+														if(accounts.get(i) instanceof CheckingAccount)
+														{
+															System.out.print("Account Type: Checking Account ");
+														}
+														else 
+														{
+															System.out.print("Account Type: Savings Account");
+														}
+												}
+											}
+											
+											if(!validName)
+											{
+												System.out.println("There are currently no accounts under that name. Enter your name again to find your accounts.");
+												answer = in.nextLine();
+											}
+									}while(!validName);
+									
+									if(currentAccount == null)
+									{
+										System.out.println("Enter the account number of the account you would like to choose to deposit.");
+										num = in.nextLine();
+										while(!isNumeric(num))
+										{
+											System.out.println("Please type a number.");
+											num = in.nextLine();
+										}
 										for(int i = 0; i < accounts.size(); i++)
 										{
-											if(accounts.get(i).getName().equals(name))
+											if(accounts.get(i).getAccNum() == Integer.parseInt(num))
 											{
-												System.out.println(accounts.get(i).toString());
-												validResponse = false;
+												currentAccount = accounts.get(i);
 											}
 										}
-										if(validResponse)
+									}
+								}
+									
+								else
+								{
+									for(int i = 0; i < accounts.size(); i++)
+									{
+										if(accounts.get(i).getAccNum() == Integer.parseInt(answer))
 										{
-											System.out.println("There are currently no accounts under that name. Please enter your name again to see all your accounts.");
+											System.out.println(accounts.get(i).toString());
+											currentAccount = accounts.get(i);
 										}
 									}
 								}
 							}
-							System.out.println("How much would you like to withdraw?");
+						System.out.println("How much would you like to withdraw?");
+						amt = in.nextLine();
+						if(!isNumeric(amt))
+						{
+							System.out.println("Please type a number.");
 							amt = in.nextLine();
-							if(!isNumeric(amt))
-							{
-								System.out.println("Please type a number.");
-								amt = in.nextLine();
-							}
-							currentAccount.withdraw(Double.parseDouble(amt));
-							break;	
+						}
+						currentAccount.withdraw(Double.parseDouble(amt));
+						play = false;
+						break;
 						}
 						
 						case "transfer":
 						{
 							System.out.println("What is your account number?");
 							num = in.nextLine();
-							if(!isNumeric(num))
+							while(!isNumeric(num))
 							{
 								System.out.println("Please type a number.");
 								num = in.nextLine();
 							}
-							while(currentAccount == null)
-							{
 								for(int i = 0; i < accounts.size(); i++)
 								{
 									if(accounts.get(i).getAccNum() == Integer.parseInt(num))
 									{
 										System.out.println(accounts.get(i).toString());
 										currentAccount = accounts.get(i);
-										currentAccNum = accounts.get(i).getAccNum();
 									}
 								}
-								
-								if(currentAccount == null)
+							
+							while(currentAccount == null)
+							{
+								System.out.println("That was not a valid account number. Either enter your name to find your accounts, or reenter your account number.");
+								answer = in.nextLine();
+								if(!isNumeric(answer))
 								{
-									validResponse = true;
-									while(validResponse)
+									do
 									{
-										System.out.println("That was not a valid account number. Please enter your name to see your accounts.");
-										name = in.nextLine();
+										for(int i = 0; i < accounts.size(); i++)
+											{
+												if(accounts.get(i).getName().equals(answer))
+												{
+														System.out.println(accounts.get(i).toString());
+														validName = true;
+														if(accounts.get(i) instanceof CheckingAccount)
+														{
+															System.out.println("Account Type: Checking Account ");
+														}
+														else 
+														{
+															System.out.println("Account Type: Savings Account  ");
+														}
+												}
+											}
+											
+											if(!validName)
+											{
+												System.out.println("There are currently no accounts under that name. Enter your name again to find your accounts.");
+												answer = in.nextLine();
+											}
+									}while(!validName);
+									
+									if(currentAccount == null)
+									{
+										System.out.println("Enter the account number of the account you would like to choose to deposit.");
+										num = in.nextLine();
+										while(!isNumeric(num))
+										{
+											System.out.println("Please type a number.");
+											num = in.nextLine();
+										}
 										for(int i = 0; i < accounts.size(); i++)
 										{
-											if(accounts.get(i).getName().equals(name))
+											if(accounts.get(i).getAccNum() == Integer.parseInt(num))
 											{
-												System.out.println(accounts.get(i).toString());
-												validResponse = false;
+												currentAccount = accounts.get(i);
 											}
 										}
-										if(validResponse)
+									}
+								}
+									
+								else
+								{
+									for(int i = 0; i < accounts.size(); i++)
+									{
+										if(accounts.get(i).getAccNum() == Integer.parseInt(answer))
 										{
-											System.out.println("There are currently no accounts under that name. Please enter your name again to see all your accounts.");
+											System.out.println(accounts.get(i).toString());
+											currentAccount = accounts.get(i);
 										}
 									}
 								}
@@ -354,30 +425,53 @@ public class BankAccountMain
 								amt = in.nextLine();
 							}
 							currentAccount.transfer(secAccount, Double.parseDouble(amt));
+							play = false;
 							break;
 						}
 						
-						case "get account number":
+						case "account numbers":
 						{
-							System.out.println(currentAccNum);
+							System.out.println("What is your name?");
+							name = in.next();
+							in.nextLine();
+							do
+							{
+								for(int i = 0; i < accounts.size(); i++)
+									{
+										if(accounts.get(i).getName().equals(name))
+										{
+												System.out.println(accounts.get(i).toString());
+												validName = true;
+												if(accounts.get(i) instanceof CheckingAccount)
+												{
+													System.out.print("Account Type: Checking Account ");
+												}
+												else 
+												{
+													System.out.print("Account Type: Savings Account");
+												}
+										}
+									}
+									
+									if(!validName)
+									{
+										System.out.println("There are currently no accounts under that name. Enter your name again to find your accounts.");
+										answer = in.nextLine();
+									}
+							}while(!validName);
+							play = false;
+							break;
 						}
 						
 						default:
 						{
-							boolean play = true;
-							while(play)
-							{
-								System.out.println("Please type deposit, withdraw, transfer, or get account number");	
-								answer = in.next();
-								in.nextLine();
-								if(answer.equals("deposit") || answer.equals("withdraw") || answer.equals("transfer") || answer.equals("get account number"))
-								{	
-								play = false;
-								}
-							}
+								System.out.println("That was not a valid answer.");	
+								break;
 						}
 					}
-					break;
+					
+					}
+				break;
 				}
 				
 				case"terminate":
@@ -388,8 +482,8 @@ public class BankAccountMain
 				
 				default:
 				{
-						System.out.println("Please type account, transaction, or terminate.");	
-						answer = in.next();
+						System.out.println("That was not a valid answer. Type deposit, withdraw, transaction, or get account numbers.");	
+						break;
 				}
 			}
 		}
@@ -410,5 +504,4 @@ public class BankAccountMain
 			return false;
 		}
 	}
-	
 }
