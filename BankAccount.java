@@ -4,7 +4,7 @@ public abstract class BankAccount
 		private double balance;
 		private int accNum;
 		private String name;
-		private static int nextAccNum = 100;
+		private static int nextAccNum = 1;
 		
 
 		public BankAccount(String name, double balance)
