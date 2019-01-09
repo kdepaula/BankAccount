@@ -19,16 +19,16 @@ public class BankAccountMain
 		{
 			String bal;
 			String name;
-			System.out.println("Would you like to add an account, make a transaction, or terminate the program?");
+			System.out.println("Would you like to add an account, make a transaction, or terminate the program? Type \"add\", \"transaction\", or \"terminate\"");
 			String answer = in.next().toLowerCase();
 			in.nextLine();
 			switch (answer)
 			{
-				case "account":
+				case "add":
 				{
 					System.out.println("What is your name?");
 					name = in.next();
-					System.out.println("Would you like to create a checking or savings account?");
+					System.out.println("Would you like to create a checking or savings account? Type \"checking\" or \"savings\".");
 					answer= in.next().toLowerCase();
 					in.nextLine();
 					switch (answer)
@@ -45,6 +45,16 @@ public class BankAccountMain
 								in.nextLine();
 							}
 							accounts.add(new CheckingAccount(name, OVER_DRAFT_FEE, TRANSACTION_FEE, FREE_TRANSACTIONS));
+							try
+							{
+								accounts.get(accounts.size()-1).deposit(Double.parseDouble(bal));
+							}
+							
+							catch(IllegalArgumentException e)
+							{
+								System.out.println("The initial deposit is invalid. The account was not created.");
+							}
+							
 							break;
 						}
 						
@@ -59,7 +69,16 @@ public class BankAccountMain
 								bal = in.next();
 								in.nextLine();
 							}
-							accounts.add(new SavingsAccount(name, Double.parseDouble(bal), RATE, MIN_BAL, MIN_BAL_FEE));
+							accounts.add(new SavingsAccount(name, RATE, MIN_BAL, MIN_BAL_FEE));
+							try
+							{
+								accounts.get(accounts.size()-1).deposit(Double.parseDouble(bal));
+							}
+							
+							catch(IllegalArgumentException e)
+							{
+								System.out.println("The initial deposit is invalid. The account was not created.");
+							}
 							break;
 						}
 					
@@ -82,6 +101,15 @@ public class BankAccountMain
 										in.nextLine();
 									}
 									accounts.add(new CheckingAccount(name, OVER_DRAFT_FEE, TRANSACTION_FEE, FREE_TRANSACTIONS));
+									try
+									{
+										accounts.get(accounts.size()-1).deposit(Double.parseDouble(bal));
+									}
+									
+									catch(IllegalArgumentException e)
+									{
+										System.out.println("The initial deposit is invalid. The account was not created.");
+									}
 									play = false;
 								}
 								
@@ -96,7 +124,16 @@ public class BankAccountMain
 										bal = in.next();
 										in.nextLine();
 									}
-									accounts.add(new SavingsAccount(name, Double.parseDouble(bal), RATE, MIN_BAL, MIN_BAL_FEE));
+									accounts.add(new SavingsAccount(name, RATE, MIN_BAL, MIN_BAL_FEE));
+									try
+									{
+										accounts.get(accounts.size()-1).deposit(Double.parseDouble(bal));
+									}
+									
+									catch(IllegalArgumentException e)
+									{
+										System.out.println("The initial deposit is invalid. The account was not created.");
+									}
 									play = false;
 								}
 							}
@@ -115,14 +152,13 @@ public class BankAccountMain
 					boolean validName = false;
 					boolean play = true;
 					System.out.println("Would you like to deposit, withdraw, transfer, or get account numbers?");
-				while(play)
-				{
-					answer = in.next();
-					in.nextLine();
-					switch(answer)
+					while(play)
 					{
-						case "deposit":
+						answer = in.nextLine();
+						switch(answer)
 						{
+							case "deposit":
+							{
 								System.out.println("What is your account number?");
 								num = in.nextLine();
 								while(!isNumeric(num))
@@ -210,7 +246,16 @@ public class BankAccountMain
 									System.out.println("Please type a number.");
 									amt = in.nextLine();
 								}
-								currentAccount.deposit(Double.parseDouble(amt));
+								
+								try
+								{
+									currentAccount.deposit(Double.parseDouble(amt));
+								}
+								
+								catch(IllegalArgumentException e)
+								{
+									System.out.println("That number is illegal. The transaction did not go through");
+								}
 								play = false;
 								break;
 						}
@@ -303,7 +348,15 @@ public class BankAccountMain
 							System.out.println("Please type a number.");
 							amt = in.nextLine();
 						}
-						currentAccount.withdraw(Double.parseDouble(amt));
+						try
+						{
+							currentAccount.withdraw(Double.parseDouble(amt));
+						}
+						
+						catch(IllegalArgumentException e)
+						{
+							System.out.println("That number is illegal. The transaction did not go through");
+						}
 						play = false;
 						break;
 						}
@@ -424,19 +477,35 @@ public class BankAccountMain
 								System.out.println("Please type a number.");
 								amt = in.nextLine();
 							}
-							currentAccount.transfer(secAccount, Double.parseDouble(amt));
+							try
+							{
+								currentAccount.transfer(secAccount, Double.parseDouble(amt));
+							}
+							
+							catch(IllegalArgumentException e)
+							{
+								System.out.println("That number is illegal. The transaction did not go through");
+							
+							}
 							play = false;
 							break;
 						}
 						
 						case "account numbers":
 						{
-							System.out.println("What is your name?");
-							name = in.next();
-							in.nextLine();
-							do
+							if(accounts.get(0) == null)
 							{
-								for(int i = 0; i < accounts.size(); i++)
+								System.out.println("There are currently no existing accounts. However, you can make an account if you choose" );
+								play = false;
+							}
+							
+							else 
+							{
+							System.out.println("What is your name?");
+							name = in.nextLine();
+								do
+								{
+									for(int i = 0; i < accounts.size(); i++)
 									{
 										if(accounts.get(i).getName().equals(name))
 										{
@@ -444,11 +513,13 @@ public class BankAccountMain
 												validName = true;
 												if(accounts.get(i) instanceof CheckingAccount)
 												{
-													System.out.print("Account Type: Checking Account ");
+													System.out.println("Account Type: Checking Account ");
+													play = false;
 												}
-												else 
+												else
 												{
-													System.out.print("Account Type: Savings Account");
+													System.out.println("Account Type: Savings Account");
+													play = false;
 												}
 										}
 									}
@@ -458,14 +529,15 @@ public class BankAccountMain
 										System.out.println("There are currently no accounts under that name. Enter your name again to find your accounts.");
 										answer = in.nextLine();
 									}
-							}while(!validName);
-							play = false;
+								}while(!validName);
+							}
+							
 							break;
 						}
 						
 						default:
 						{
-								System.out.println("That was not a valid answer.");	
+								System.out.println("That was not a valid answer. Make sure to type \"deposit\", \"withdraw\", \"transfer\", or \"account numbers\".");	
 								break;
 						}
 					}
@@ -482,15 +554,18 @@ public class BankAccountMain
 				
 				default:
 				{
-						System.out.println("That was not a valid answer. Type deposit, withdraw, transaction, or get account numbers.");	
+						System.out.println("That was not a valid answer.");	
 						break;
 				}
 			}
 		}
-		
-		System.out.println("remember to put JAVA COMMENTS DONT FORGET");
 	}
 
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	private static boolean isNumeric(String str) 
 	{
 		try
