@@ -6,7 +6,14 @@ public class CheckingAccount extends BankAccount
 	private final double FREE_TRANS;
 	private int numTransactions = 0;
 	
-
+	/**
+	 * 
+	 * @param name the name of the account holder
+	 * @param balance the initial balance you want in the account
+	 * @param odf the overdraft fee of the account 
+	 * @param tf the transaction fee of the account
+	 * @param freeTrans the number of free transactions you get for the account
+	 */
 	public CheckingAccount(String name, double balance, double odf, double tf, double freeTrans) 
 	{
 		super(name, balance);
@@ -15,6 +22,13 @@ public class CheckingAccount extends BankAccount
 		FREE_TRANS = freeTrans;
 	}
 	
+	/**
+	 * 
+	 *@param name the name of the account holder
+	 * @param odf the overdraft fee of the account 
+	 * @param tf the transaction fee of the account
+	 * @param freeTrans the number of free transactions you get for the account
+	 */
 	public CheckingAccount(String name, double odf, double tf, double freeTrans)
 	{
 		super(name ,0);
@@ -23,6 +37,9 @@ public class CheckingAccount extends BankAccount
 		FREE_TRANS = freeTrans;
 	}
 	
+	/**
+	 * @param the amount you want to deposit
+	 */
 	public void deposit(double amt)
 	{
 		if(amt < 0)
@@ -40,6 +57,9 @@ public class CheckingAccount extends BankAccount
 		numTransactions++;
 	}
 	
+	/**
+	 * @param amt the amount you want to withdraw
+	 */
 	public void withdraw(double amt)
 	{
 		if(amt < 0 || super.getBalance() < 0)
@@ -62,7 +82,9 @@ public class CheckingAccount extends BankAccount
 		}
 		
 	}
-
+	/**
+	 * updates the account at the end of the month
+	 */
 	public void endOfMonthUpdate() 
 	{
 		numTransactions = 0;

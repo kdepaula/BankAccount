@@ -1,4 +1,3 @@
-
 public class SavingsAccount extends BankAccount
 {
 	private double intRate;
@@ -7,11 +6,11 @@ public class SavingsAccount extends BankAccount
 	
 	/**
 	 * 
-	 * @param name
-	 * @param balance
-	 * @param intRate
-	 * @param mb
-	 * @param mbf
+	 * @param name the name of the account holder
+	 * @param balance the balance you want to initially put into the account
+	 * @param intRate the interest rate on the account
+	 * @param mb the minimum balance in the account
+	 * @param mbf the minimum balance fee of the account if the minimum balance is not met
 	 */
 	public SavingsAccount(String name, double balance, double intRate, double mb, double mbf) 
 	{
@@ -23,10 +22,10 @@ public class SavingsAccount extends BankAccount
 	
 	/**
 	 * 
-	 * @param name
-	 * @param intRate
-	 * @param mb
-	 * @param mbf
+	 * @param name the name of the account holder
+	 * @param intRate the interest rate on the account
+	 * @param mb the minimum balance in the account
+	 * @param mbf the minimum balance fee of the account if the minimum balance is not met
 	 */
 	public SavingsAccount(String name, double intRate, double mb, double mbf)
 	{
@@ -34,7 +33,8 @@ public class SavingsAccount extends BankAccount
 	}
 	
 	/**
-	 * 
+	 * @param amt the amount of money you want to withdraw
+	 * withdraws the amount of money in the account
 	 */
 	public void withdraw(double amt)
 	{
@@ -52,7 +52,7 @@ public class SavingsAccount extends BankAccount
 	}
 	
 	/**
-	 * 
+	 * @param amt the amount you want to deposit
 	 */
 	public void deposit(double amt)
 	{
@@ -64,7 +64,7 @@ public class SavingsAccount extends BankAccount
 	}
 	
 	/**
-	 * 
+	 * updates the account at the end of the month
 	 */
 	public void endOfMonthUpdate() 
 	{
@@ -72,7 +72,7 @@ public class SavingsAccount extends BankAccount
 	}
 	
 	/**
-	 * 
+	 * adds the interest on the account
 	 */
 	public void addInterest()
 	{

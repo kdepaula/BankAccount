@@ -1,4 +1,3 @@
-
 public abstract class BankAccount 
 {
 		private double balance;
@@ -9,8 +8,8 @@ public abstract class BankAccount
 		
 		/**
 		 * 
-		 * @param name
-		 * @param balance
+		 * @param name the name of the account holder
+		 * @param balance the amount of money initially put into the account, or the balance
 		 */
 		public BankAccount(String name, double balance)
 		{
@@ -23,7 +22,7 @@ public abstract class BankAccount
 		
 		/**
 		 * 
-		 * @param name
+		 * @param name the name of the account holder
 		 */
 		public BankAccount(String name)
 		{
@@ -32,7 +31,7 @@ public abstract class BankAccount
 	
 		/**
 		 * 
-		 * @param amt
+		 * @param amt amount that you want to deposit
 		 */
 		public void deposit(double amt)
 		{
@@ -41,7 +40,7 @@ public abstract class BankAccount
 		
 		/**
 		 * 
-		 * @param amt
+		 * @param amt amount that you want to withdraw
 		 */
 		public void withdraw(double amt)
 		{
@@ -50,7 +49,7 @@ public abstract class BankAccount
 		
 		/**
 		 * 
-		 * @return
+		 * @return returns the balance in the account
 		 */
 		public double getBalance()
 		{
@@ -59,7 +58,7 @@ public abstract class BankAccount
 		
 		/**
 		 * 
-		 * @return
+		 * @return returns the account number of the account
 		 */
 		public int getAccNum()
 		{
@@ -68,7 +67,7 @@ public abstract class BankAccount
 		
 		/**
 		 * 
-		 * @return
+		 * @return the name of the account holder
 		 */
 		public String getName()
 		{
@@ -82,8 +81,8 @@ public abstract class BankAccount
 		
 		/**
 		 * 
-		 * @param other
-		 * @param amt
+		 * @param other the other bank account that you want to deposit money into
+		 * @param amt the amount of money you want to transfer
 		 */
 		public void transfer(BankAccount other, double amt)
 		{
@@ -96,7 +95,7 @@ public abstract class BankAccount
 		}
 		
 		/**
-		 * 
+		 * displays the account number, account holder, and balance of an account
 		 */
 		public String toString()
 		{

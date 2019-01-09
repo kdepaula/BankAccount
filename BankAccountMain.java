@@ -563,8 +563,8 @@ public class BankAccountMain
 
 	/**
 	 * 
-	 * @param str
-	 * @return
+	 * @param str either a number or a string but you want to know which one it is
+	 * @return whether or not the parameter is a number
 	 */
 	private static boolean isNumeric(String str) 
 	{
