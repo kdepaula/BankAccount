@@ -7,7 +7,7 @@ public abstract class BankAccount
 		
 		
 		/**
-		 * 
+		 * constructor that makes a bank account with parameters name and balance
 		 * @param name the name of the account holder
 		 * @param balance the amount of money initially put into the account, or the balance
 		 */
@@ -21,7 +21,7 @@ public abstract class BankAccount
 		}
 		
 		/**
-		 * 
+		 * *constructor that makes a bank account with parameter name
 		 * @param name the name of the account holder
 		 */
 		public BankAccount(String name)
@@ -30,7 +30,7 @@ public abstract class BankAccount
 		}
 	
 		/**
-		 * 
+		 * deposits money into the account
 		 * @param amt amount that you want to deposit
 		 */
 		public void deposit(double amt)
@@ -39,7 +39,7 @@ public abstract class BankAccount
 		}
 		
 		/**
-		 * 
+		 * withdraws money from the account
 		 * @param amt amount that you want to withdraw
 		 */
 		public void withdraw(double amt)
@@ -48,7 +48,7 @@ public abstract class BankAccount
 		}
 		
 		/**
-		 * 
+		 * returns the balance
 		 * @return returns the balance in the account
 		 */
 		public double getBalance()
@@ -57,7 +57,7 @@ public abstract class BankAccount
 		}
 		
 		/**
-		 * 
+		 * returns the account number of the account
 		 * @return returns the account number of the account
 		 */
 		public int getAccNum()
@@ -66,7 +66,7 @@ public abstract class BankAccount
 		}
 		
 		/**
-		 * 
+		 * returns the name of the account holder
 		 * @return the name of the account holder
 		 */
 		public String getName()
@@ -80,7 +80,7 @@ public abstract class BankAccount
 		public abstract void endOfMonthUpdate();
 		
 		/**
-		 * 
+		 * transfers money from one account to another account
 		 * @param other the other bank account that you want to deposit money into
 		 * @param amt the amount of money you want to transfer
 		 */

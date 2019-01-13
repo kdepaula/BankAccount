@@ -20,17 +20,15 @@ public class BankAccountMain
 			String bal;
 			String name;
 			System.out.println("Would you like to add an account, make a transaction, or terminate the program? Type \"add\", \"transaction\", or \"terminate\"");
-			String answer = in.next().toLowerCase();
-			in.nextLine();
+			String answer = in.nextLine().toLowerCase();
 			switch (answer)
 			{
 				case "add":
 				{
 					System.out.println("What is your name?");
-					name = in.next();
+					name = in.nextLine();
 					System.out.println("Would you like to create a checking or savings account? Type \"checking\" or \"savings\".");
-					answer= in.next().toLowerCase();
-					in.nextLine();
+					answer= in.nextLine().toLowerCase();
 					switch (answer)
 					{
 						case "checking":
@@ -52,9 +50,10 @@ public class BankAccountMain
 							
 							catch(IllegalArgumentException e)
 							{
-								System.out.println("The initial deposit is invalid. The account was not created.");
+								System.out.println("The initial deposit is invalid. Transaction not authorized. A balance of zero was put into the account instead.");
 							}
 							
+							System.out.println(accounts.get(accounts.size()-1).toString());
 							break;
 						}
 						
@@ -77,8 +76,11 @@ public class BankAccountMain
 							
 							catch(IllegalArgumentException e)
 							{
-								System.out.println("The initial deposit is invalid. The account was not created.");
+								System.out.println("The initial deposit is invalid. Transaction not authorized. A balance of zero was put into the account instead.");
 							}
+							
+							System.out.println(accounts.get(accounts.size()-1).toString());
+							
 							break;
 						}
 					
@@ -87,8 +89,7 @@ public class BankAccountMain
 							boolean play = true;
 							while(play)
 							{
-								System.out.println("Please type checking or savings");	
-								answer = in.next();
+								System.out.println("Please type \"checking\" or \"savings\".");
 								in.nextLine();
 								if(answer.equals("checking"))
 								{	
@@ -108,9 +109,10 @@ public class BankAccountMain
 									
 									catch(IllegalArgumentException e)
 									{
-										System.out.println("The initial deposit is invalid. The account was not created.");
+										System.out.println("The initial deposit is invalid. Transaction not authorized. A balance of zero was put into the account instead.");
 									}
 									play = false;
+									System.out.println(accounts.get(accounts.size()-1).toString());
 								}
 								
 								if(answer.equals("savings"))
@@ -132,9 +134,10 @@ public class BankAccountMain
 									
 									catch(IllegalArgumentException e)
 									{
-										System.out.println("The initial deposit is invalid. The account was not created.");
+										System.out.println("The initial deposit is invalid. Transaction not authorized. A balance of zero was put into the account instead.");
 									}
 									play = false;
+									System.out.println(accounts.get(accounts.size()-1).toString());
 								}
 							}
 							break;
@@ -151,7 +154,7 @@ public class BankAccountMain
 					String amt;
 					boolean validName = false;
 					boolean play = true;
-					System.out.println("Would you like to deposit, withdraw, transfer, or get account numbers?");
+					System.out.println("Would you like to deposit, withdraw, transfer, or get account numbers? Type \"deposit\", \"withdraw\", \"transfer\", or \"account numbers\".");
 					while(play)
 					{
 						answer = in.nextLine();
@@ -191,11 +194,11 @@ public class BankAccountMain
 															validName = true;
 															if(accounts.get(i) instanceof CheckingAccount)
 															{
-																System.out.print("Account Type: Checking Account ");
+																System.out.println("Account Type: Checking Account ");
 															}
 															else 
 															{
-																System.out.print("Account Type: Savings Account");
+																System.out.println("Account Type: Savings Account");
 															}
 													}
 												}
@@ -254,7 +257,7 @@ public class BankAccountMain
 								
 								catch(IllegalArgumentException e)
 								{
-									System.out.println("That number is illegal. The transaction did not go through");
+									System.out.println("That number is illegal. Transaction not authorized.");
 								}
 								play = false;
 								break;
@@ -294,11 +297,11 @@ public class BankAccountMain
 														validName = true;
 														if(accounts.get(i) instanceof CheckingAccount)
 														{
-															System.out.print("Account Type: Checking Account ");
+															System.out.println("Account Type: Checking Account ");
 														}
 														else 
 														{
-															System.out.print("Account Type: Savings Account");
+															System.out.println("Account Type: Savings Account");
 														}
 												}
 											}
@@ -493,7 +496,7 @@ public class BankAccountMain
 						
 						case "account numbers":
 						{
-							if(accounts.get(0) == null)
+							if(accounts.isEmpty())
 							{
 								System.out.println("There are currently no existing accounts. However, you can make an account if you choose" );
 								play = false;
@@ -514,11 +517,13 @@ public class BankAccountMain
 												if(accounts.get(i) instanceof CheckingAccount)
 												{
 													System.out.println("Account Type: Checking Account ");
+													System.out.println(" ");
 													play = false;
 												}
 												else
 												{
 													System.out.println("Account Type: Savings Account");
+													System.out.println(" ");
 													play = false;
 												}
 										}
@@ -527,7 +532,7 @@ public class BankAccountMain
 									if(!validName)
 									{
 										System.out.println("There are currently no accounts under that name. Enter your name again to find your accounts.");
-										answer = in.nextLine();
+										name = in.nextLine();
 									}
 								}while(!validName);
 							}
@@ -562,9 +567,9 @@ public class BankAccountMain
 	}
 
 	/**
-	 * 
+	 * determines if the parameter is a string or a number
 	 * @param str either a number or a string but you want to know which one it is
-	 * @return whether or not the parameter is a number
+	 * @return whether or not the parameter is a number. It returns true if it is numeric and false if it is not.
 	 */
 	private static boolean isNumeric(String str) 
 	{

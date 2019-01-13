@@ -5,7 +5,7 @@ public class SavingsAccount extends BankAccount
 	private final double MIN_BAL_FEE;
 	
 	/**
-	 * 
+	 * constructor that makes a savings account with parameters name, balance, interest rate, minimum balance, and minimum balance fee
 	 * @param name the name of the account holder
 	 * @param balance the balance you want to initially put into the account
 	 * @param intRate the interest rate on the account
@@ -22,6 +22,7 @@ public class SavingsAccount extends BankAccount
 	
 	/**
 	 * 
+	 * constructor that makes a savings account with parameters name, interest rate, minimum balance, and minimum balance fee
 	 * @param name the name of the account holder
 	 * @param intRate the interest rate on the account
 	 * @param mb the minimum balance in the account
@@ -33,6 +34,7 @@ public class SavingsAccount extends BankAccount
 	}
 	
 	/**
+	 * withdraws money from the account
 	 * @param amt the amount of money you want to withdraw
 	 * withdraws the amount of money in the account
 	 */
@@ -52,6 +54,7 @@ public class SavingsAccount extends BankAccount
 	}
 	
 	/**
+	 * deposits money into the account
 	 * @param amt the amount you want to deposit
 	 */
 	public void deposit(double amt)

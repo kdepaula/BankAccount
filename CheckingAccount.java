@@ -7,7 +7,7 @@ public class CheckingAccount extends BankAccount
 	private int numTransactions = 0;
 	
 	/**
-	 * 
+	 * constructor that makes a checking account with parameters name, balance, over draft fee, transaction fee, and free transactions
 	 * @param name the name of the account holder
 	 * @param balance the initial balance you want in the account
 	 * @param odf the overdraft fee of the account 
@@ -23,7 +23,7 @@ public class CheckingAccount extends BankAccount
 	}
 	
 	/**
-	 * 
+	 * constructor that makes a checking account with parameters name, over draft fee, transaction fee, and free transactions
 	 *@param name the name of the account holder
 	 * @param odf the overdraft fee of the account 
 	 * @param tf the transaction fee of the account
@@ -38,6 +38,7 @@ public class CheckingAccount extends BankAccount
 	}
 	
 	/**
+	 * deposits money into the account
 	 * @param the amount you want to deposit
 	 */
 	public void deposit(double amt)
@@ -58,6 +59,7 @@ public class CheckingAccount extends BankAccount
 	}
 	
 	/**
+	 * withdraws money from the account
 	 * @param amt the amount you want to withdraw
 	 */
 	public void withdraw(double amt)
